@@ -1,0 +1,190 @@
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 45px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 45px;
+    background-color: #173f5f;
+    color: white;
+    text-align: center;
+}
+
+#sidr-button {
+    font-size: 30px !important;
+}
+
+.app_header {
+    position: fixed !important;
+
+}
+
+.menu_title {
+    font-weight: bold !important;
+    color: #173f5f !important;
+    font-size: 15px !important;
+    height: 30px !important;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 45px;
+
+}
+
+
+
+
+
+
+.layout-login {
+    padding-top: 20px;
+    background-color: #9CAEA3;
+    flex: 1 0 auto;
+    height: 100% !important;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+
+}
+
+.trigger-right {
+
+    float: right;
+!important;
+    vertical-align: middle !important;
+    height: 43px !important;
+
+}
+
+#overlay {
+    background: #212529;
+    color: #fff;
+    opacity: .7;
+    position: fixed;
+}
+
+.preloading-effect {
+    position: fixed;
+    z-index: 9999;
+    background: #212529;
+    color: #fff;
+    opacity: .7
+}
+
+/*Painéis de alerta w2ui*/
+.icon-alert {
+    max-width: 80px;
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+
+
+/*Classe que adiciona estilo no w2popup, utilizado no arquivo "messages.blade.php"*/
+.custom-msg-body
+{
+    padding: 10px;
+    height: 100%;
+    font-size: 12px !important;
+}
+
+.nopadding {
+
+    padding: -15px !important;
+    margin: -15px !important;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+.w2ui-col-on-off table tbody tr td label{
+    color: #666 !important;
+}
+
+
+.w2ui-grid-header{
+    /*Altera-se a cor e o Z-index do Header do Grid W2UI*/
+    /* background-color: rgba(92, 177, 198, 0.53)  !important;*/
+    background-color: #5DB1C6  !important;
+    background-image: none !important;
+    font-weight: bold !important;
+    /*z-index: 1000 !important;*/
+
+    /*Deixa o cabeçalho do W2Grid minimamente responsivo*/
+    /*display:block !important;*/
+    overflow:auto !important;
+    height: auto !important;
+
+    /*ALTERA A FONTE, ETC*/
+    text-transform: uppercase !important;
+    /*text-align: left !important;*/
+
+    font-weight: bold !important;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+    color: white !important;
+
+
+
+
+}
+
+/*Limita o Twitter Typeahead para um tamanho máximo de 180px (na caixa de busca)*/
+.tt-menu {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+/*Altera-se o z-index da w2popup, para sempre aparecer acima da Máscara (Overlay/Mascara)*/
+.w2ui-popup {
+    z-index: 10000 !important;
+
+
+}
+
+.custom-sw {
+    margin: 20px;
+    display: inline-block;
+}
+
+/**ALTERA-SE A COR DAS ABAS*/
+.nav-tabs > .nav-item > .nav-link:not(.active) {
+
+
+    background-color: #E2972F !important;
+    color: white !important;
+    font-weight: bold !important;
+    border: 1px solid white !important;
+
+}
+
+.nav-tabs > .nav-item > .nav-link.active {
+
+    color: #546E7A !important;
+    font-weight: bold !important;
+
+
+}
+
+.custom-control-indicator {
+    position: relative;
+    border-radius: 0;
+    border: 2px solid #cdc9ca;
+    background: #fff;
+}
+
+
+.zoom {
+    transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
