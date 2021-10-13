@@ -1,78 +1,50 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+  <img width="200" height="190" src="https://i.imgur.com/38nWF8X.jpg">
 </p>
 
-## About Laravel
+# Sistema com integração à API Conversão Monetária - Grupo Paco
+Respositório para teste prático.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Ferramentas Utilizadas Backend**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Framework Laravel versão 7.30.4
+* Base de Dados MariaDB 10.4.11 (Compatível com MySQL)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Ferramentas Utilizadas Front-end**
 
-## Learning Laravel
+* Bootstrap v4.1.3
+* jQuery v3.6.0
+* w2ui 1.5.rc1 (nightly)
+* Demais componentes de terceiros para datepicker, máscaras de input e afins
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**REQUISITOS DA APLICAÇÃO**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Conforme o solicitado, a aplicação deve:
 
-## Laravel Sponsors
+* Possuir front-end confeccionado, preferencialmente, em Laravel
+* Base de dados MySQL
+* Possuir front-end em Bootstrap, HTML5 e CSS
+* Sistema de Login
+* Controle de Sessão
+* Utilização da API Exchange Rates (https://exchangeratesapi.io) para a conversão das moedas BRL, USD e CAD.
+* Armazenamento de Histórico das Conversões, com paginação.
+* Demais possibilidades, à critério do desenvolvedor.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**DA REALIZAÇÃO DAS ATIVIDADES**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+Conforme o solicitado, foi realizado:
 
-## Contributing
+* Sistema de Login (e-mail e senha)
+* Gerenciamento de Usuários na própria aplicação
+* Gerenciamento de Perfis de usuário (Perfil administrador e usuário comum)
+* Controle de Sessão
+* Gerenciamento de permissões através de Gates
+* Gerenciamento de Chaves de API, armazenadas com Criptografia em base de dados
+* Criação de sistema de Cache para economia de requisições, visto que a API possui planos pagos.
+* Possibilidade de conversão monetária mesmo sem chave de API (baseada em cache)
+* Armazenamento de histórico de conversões, com infinite scroll
+* Backend confeccionado em Laravel
+* Base de dados MariaDB (Compatível com MySQL)
+* Front-end confeccionado em Boostrap 4, HTML5 e CSS
+* Sistema parcialmente responsivo, funcional nos browsers: Google Chrome, Ópera e Firefox.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
