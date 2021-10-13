@@ -156,8 +156,11 @@
                     cache
                 },
                 function(resposta){
-                    if (!resposta.success)
+                    if (!resposta.success){
                         msg(resposta.message,false);
+                        return;
+                    }
+
 
                     const data = resposta.data;
                     changeFormState(data.cache.cached,data.cache.not_cached,data.valor_conversao);

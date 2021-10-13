@@ -30,8 +30,6 @@ class SearchUtils
         $method = mb_strtoupper($method);
 
 
-
-
         if ($request->input('request')){
 
             //Busca Automática
@@ -169,6 +167,8 @@ class SearchUtils
             return $db;
 
         }
+
+        return $db;
 
     }
 

@@ -50,7 +50,7 @@ class ConversaoController extends Controller
 
         $this->validate($request,[
             'exchange_api_key' => 'present',
-            'usuario_id' => 'present'
+            'usuario_id' => 'integer|nullable'
         ]);
 
         $usuario_id = !empty($request->usuario_id)?$request->usuario_id:0;
@@ -84,7 +84,7 @@ class ConversaoController extends Controller
             'moeda_origem' => 'required|string|in:BRL,CAD,USD',
             'valor_origem' => 'required|numeric|required|min:0.01',
             'moeda_destino' => 'required|string|in:BRL,CAD,USD',
-            'cache' => 'boolean'
+            'cache' => 'boolean|nullable'
         ]);
 
         if ($request->moeda_origem == $request->moeda_destino)
@@ -116,7 +116,7 @@ class ConversaoController extends Controller
         $ref_date_str = $ref_date->format('Y-m-d');
 
 
-
+        //Tenta-se recuperar o objeto de cache
         $cache_obj = CacheConversao::where("ref_date",'=',$ref_date->format('Y-m-d'))
                         ->where('api_timestamp','<=',$now_unix_timestamp)
                         ->first();
@@ -155,14 +155,13 @@ class ConversaoController extends Controller
 
                 $rates = $body_resp['rates'];
 
-                $now_unix_timestamp = $body_resp['timestamp']; //o Timestamp da Requisição assume o valor de NOW
 
                 $cache_obj->ref_date = $ref_date_str;
                 $cache_obj->usuario_id = Auth::user()->id;
                 $cache_obj->valor_usd = 1; //Na base de dados, a moeda base é sempre Dólar Estadunidense
                 $cache_obj->valor_brl = $rates['USD'] / $rates['BRL'];
                 $cache_obj->valor_cad = $rates['USD'] / $rates['CAD'];
-                $cache_obj->api_timestamp = $now_unix_timestamp;
+                $cache_obj->api_timestamp = $body_resp['timestamp']; //Este timestamp é da última atualização da API
                 $cache_obj->save();
 
                 //Recupera-se o objeto novamente simplesmente para se recuperar com exatas 6 casas decimais
@@ -193,7 +192,6 @@ class ConversaoController extends Controller
             $historico->save();
 
             //Objeto de Retorno com informações da conversão
-
             $return_obj = new \stdClass();
             $return_obj->cache = HistoricoConversao::getCacheInfo(Auth::user()->id);
             $return_obj->valor_conversao = $historico->valor_destino;
@@ -213,8 +211,6 @@ class ConversaoController extends Controller
 
     public function listar(Request $request)
     {
-
-
 
         $query = DB::table('historico_conversao AS HIST')
             ->selectRaw("

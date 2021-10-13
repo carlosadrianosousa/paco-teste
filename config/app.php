@@ -84,7 +84,7 @@ return [
     */
 
     //'locale' => 'en',
-    'locale' => 'pt-br',
+    'locale' => 'pt-BR',
 
 
     /*

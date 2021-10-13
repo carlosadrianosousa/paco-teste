@@ -55,14 +55,20 @@
         </li>
 
         <li>
-            <a data-toggle="collapse" class="viaAjaxPost" href="{{route('usuario.EditView',[\Auth::user()->id])}}" aria-expanded="false">
+            <a class="viaAjaxPost" href="{{route('usuario.EditView',[\Auth::user()->id])}}" aria-expanded="false">
                 <i class="fa fa-user fa-fw mr-2"></i>Meu Perfil
             </a>
         </li>
 
         <li>
-            <a data-toggle="collapse" class="viaAjaxPost" href="{{route('conversao_monetaria.FormView')}}" aria-expanded="false">
+            <a class="viaAjaxPost" href="{{route('conversao_monetaria.FormView')}}" aria-expanded="false">
                 <i class="fa fa-refresh fa-fw mr-2"></i>Conversão Monetária
+            </a>
+        </li>
+
+        <li>
+            <a  href="{{route('logout')}}">
+                <i class="fa fa-arrow-left fa-fw mr-2"></i>Sair
             </a>
         </li>
 

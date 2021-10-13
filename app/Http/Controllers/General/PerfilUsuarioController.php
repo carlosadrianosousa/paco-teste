@@ -66,6 +66,8 @@ class PerfilUsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validaForm($request);
+
         //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
         DB::beginTransaction();
         try {
@@ -97,6 +99,9 @@ class PerfilUsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validaForm($request);
+
         //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
         DB::beginTransaction();
         try {
@@ -156,4 +161,17 @@ class PerfilUsuarioController extends Controller
 
         return $query->get();
     }
+
+    private  function validaForm(Request $request)
+    {
+
+
+        //INÍCIO DAS VALIDAÇÕES
+        $this->validate($request, [
+            'nome' => 'string|required|max:250',
+            'descricao' => 'string|nullable|max:1000',
+        ]);
+        //FIM DAS VALIDAÇÕES
+    }
+
 }

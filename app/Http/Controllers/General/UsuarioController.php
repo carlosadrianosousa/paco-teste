@@ -74,7 +74,8 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
+        $this->validaForm($request);
+
         if (!$request->senha){
             return response()->json(['success' => false, 'message' => 'Informe a senha.']);
         }
@@ -127,7 +128,9 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
+
+        $this->validaForm($request);
+
         if ($request->senha && $request->senha != $request->senha_confirm){
             return response()->json(['success' => false, 'message' => 'As senhas não conferem. Por favor, informe a nova senha.'],400);
         }
@@ -200,7 +203,7 @@ class UsuarioController extends Controller
             return response()->json(['success' => true, 'message' => 'O registro foi deletado com sucesso !']);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['success' => false, 'message' => 'Não foi possível deletar o registro, verifique se existe algum impedimento no cadastro.'],500);
+            return response()->json(['success' => false, 'message' => 'Não foi possível deletar o registro, verifique se existe algum impedimento no cadastro.'],400);
         }
     }
 
@@ -218,5 +221,22 @@ class UsuarioController extends Controller
         $query = SearchUtils::createQuery($request, $query, 'having');
 
         return $query->get();
+    }
+
+    private  function validaForm(Request $request)
+    {
+
+        //INÍCIO DAS VALIDAÇÕES
+        $this->validate($request, [
+            'nome' => 'string|required|max:250',
+            'email' => 'email|required|max:1000',
+            'perfil_id' => 'integer|required|min:1',
+            'senha' => 'string|nullable|max:250',
+            'senha_confirm' => 'string|nullable|max:250',
+            'ativo' => 'boolean|required',
+            'exchange_api_key' => 'string|nullable',
+
+        ]);
+        //FIM DAS VALIDAÇÕES
     }
 }

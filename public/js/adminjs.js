@@ -1,11 +1,3 @@
-function IsJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
 
 function hasNumber(str) {
     return /\d/.test(str);
