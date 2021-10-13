@@ -77,5 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //ROTAS RELATIVAS À CONVERSÃO MONETÁRIA
     route::post('ConversaoMonetaria/FormView', ['as' => 'conversao_monetaria.FormView', 'uses' => 'General\ConversaoController@FormView']);
+    route::get('ConversaoMonetaria', ['as' => 'conversao_monetaria.listar', 'uses' => 'General\ConversaoController@listar']);
+    route::post('ConversaoMonetaria/CheckApiKey', ['as' => 'conversao_monetaria.checkAPI', 'uses' => 'General\ConversaoController@checkAPI']);
 
 });

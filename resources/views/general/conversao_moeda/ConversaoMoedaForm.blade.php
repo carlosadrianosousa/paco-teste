@@ -72,7 +72,7 @@
                 <div class="col-md-3">
                     <div class="card-counter success">
                         <i class="fa fa-database"></i>
-                        <span class="count-numbers" id="count-cache">0</span>
+                        <span class="count-numbers" id="count-cache">{{$cache_info->cached}}</span>
                         <span class="count-name">Total requisições Cache</span>
                     </div>
                 </div>
@@ -80,10 +80,17 @@
                 <div class="col-md-3">
                     <div class="card-counter info">
                         <i class="fa fa-code-pull-request"></i>
-                        <span class="count-numbers" id="count-request">0</span>
+                        <span class="count-numbers" id="count-request">{{$cache_info->not_cached}}</span>
                         <span class="count-name">Total de Requisições à API</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!--INÍCIO DA GRID DE HISTÓRICOS-->
+        <div class="row">
+            <div class="col mt-3">
+                <div id="gridHistorico" class="w-100 pb-0 mb-0" style="height: 250px !important;"></div>
             </div>
         </div>
 
@@ -110,6 +117,56 @@
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             language: "pt-BR"
+        });
+
+        $('#valor_origem').maskMoney({
+            precision:2,
+            thousands:'.',
+            decimal: ',',
+            //formatOnBlur: true,
+            //reverse: true,
+            selectAllOnFocus: true,
+            allowEmpty: true
+        });
+
+
+
+
+        $().w2destroy("gridHistorico");
+        $('#gridHistorico').w2grid({
+            name: 'gridHistorico',
+            header: 'Histórico de Conversões',
+            msgRefresh: 'Atualizando...',
+            multiSelect : false,
+            recid:'id',
+            method: 'GET',
+            show: {
+                footer: true,
+                toolbar: true,
+                toolbarAdd: false,
+                toolbarDelete: false,
+                toolbarEdit: false,
+                header: true,
+                toolbarColumns: false,
+                searchAll: false,
+                toolbarInput: false
+            },
+            columns: [
+                { caption: '', size: '20px', attr: 'align=center',info: true},
+                { field: 'recid', caption: 'Cód.', size: '100px', sortable: true, attr: 'align=center', type: 'int' },
+                { field: 'nome', caption: 'Nome', size: '200px', sortable: true, attr: 'align=center', type: 'text' },
+                { field: 'descricao', caption: 'Descrição', size: '800px', sortable: true, resizable: true, type: 'text' },
+
+            ],
+
+            searches: [
+                { field: 'id', caption: 'ID', type: 'int' },
+                { field: 'nome', caption: 'Nome', type: 'text' },
+                { field: 'descricao', caption: 'Descrição', type: 'text' },
+            ],
+
+            url: '{{route('conversao_monetaria.listar')}}',
+
         });
 
 

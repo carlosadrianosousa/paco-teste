@@ -100,6 +100,7 @@
 <script src="components/sidr/jquery.sidr.min.js"></script>
 <script src="components/bootstrap/js/bootstrap.min.js"></script>
 <script src="components/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="components/jquery-maskmoney/jquery.maskMoney.min.js"></script>
 
 <script src="components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
@@ -125,7 +126,7 @@
 @include('admin.layout.messages')
 <script src="components/w2ui/w2ui-1.5.rc1.min.js"></script>
 <script src="{{asset('js/adminjs.js')}}"></script>
-<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+
 
 </body>
 </html>

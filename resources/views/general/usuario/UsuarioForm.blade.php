@@ -68,9 +68,15 @@
                     </div>
                     <div class="card-body bg-white">
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-10">
                                 {{Form::label('Token de Acesso',null,['class'=>'control-label'])}}
                                 {{Form::text('exchange_api_key', '',['class'=>'disableVisualize form-control','id' => 'exchange_api_key','placeholder' => '************'])}}
+                            </div>
+                            <div class="col-md-2">
+                                <button id="btn-check-key"  class="btn btn-secondary float-right mt-4 mb-4">
+                                    <i class="fa fa-btn fa-refresh"></i>
+                                    Testar API
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -108,6 +114,31 @@
 
             AjaxAddEdit();
         });
+
+        $('#btn-check-key').on('click', function(){
+            testAPI();
+        })
+
+        function testAPI(){
+            const exchange_api_key = $('#exchange_api_key').val();
+
+            doPostAjaxCall(
+                '{{route('conversao_monetaria.checkAPI')}}',
+                {
+                    exchange_api_key
+                },
+                function(resposta){
+                    if (resposta.success){
+                        msg("Chave de API é Válida!",true);
+                    }else{
+                        msg("Chave de API Inváida!",false);
+                    }
+                },
+                function(resposta){
+                    msg(resposta.responseText,false,'log');
+                }
+            )
+        }
 
 
 
