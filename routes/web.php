@@ -76,8 +76,11 @@ Route::group(['middleware' => ['auth']], function () {
     route::delete('Usuario/{id}', ['as' => 'usuario.destroy', 'uses' => 'General\UsuarioController@destroy']);
 
     //ROTAS RELATIVAS À CONVERSÃO MONETÁRIA
+    route::post('ConversaoMonetaria/CheckApiKey', ['as' => 'conversao_monetaria.checkAPI', 'uses' => 'General\ConversaoController@checkAPI']);
     route::post('ConversaoMonetaria/FormView', ['as' => 'conversao_monetaria.FormView', 'uses' => 'General\ConversaoController@FormView']);
     route::get('ConversaoMonetaria', ['as' => 'conversao_monetaria.listar', 'uses' => 'General\ConversaoController@listar']);
-    route::post('ConversaoMonetaria/CheckApiKey', ['as' => 'conversao_monetaria.checkAPI', 'uses' => 'General\ConversaoController@checkAPI']);
+    route::post('ConversaoMonetaria', ['as' => 'conversao_monetaria.convert', 'uses' => 'General\ConversaoController@convert']);
+
+
 
 });

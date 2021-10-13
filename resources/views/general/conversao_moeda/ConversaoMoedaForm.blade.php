@@ -72,7 +72,7 @@
                 <div class="col-md-3">
                     <div class="card-counter success">
                         <i class="fa fa-database"></i>
-                        <span class="count-numbers" id="count-cache">{{$cache_info->cached}}</span>
+                        <span class="count-numbers" id="count-cached">{{$cache_info->cached}}</span>
                         <span class="count-name">Total requisições Cache</span>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 <div class="col-md-3">
                     <div class="card-counter info">
                         <i class="fa fa-code-pull-request"></i>
-                        <span class="count-numbers" id="count-request">{{$cache_info->not_cached}}</span>
+                        <span class="count-numbers" id="count-not-cached">{{$cache_info->not_cached}}</span>
                         <span class="count-name">Total de Requisições à API</span>
                     </div>
                 </div>
@@ -128,6 +128,61 @@
             selectAllOnFocus: true,
             allowEmpty: true
         });
+
+        $('#btn-convert').on('click', function(){
+            convert();
+        })
+
+        function convert(){
+
+            const ref_date = $('#ref_date').val();
+            const moeda_origem = $('#moeda_origem_combo').val();
+            const valor_origem = $('#valor_origem').maskMoney('unmasked')[0];
+            const moeda_destino = $('#moeda_destino_combo').val();
+            const cache = $('#enable-cache').prop('checked')?1:0;
+
+            if (!ref_date || !moeda_origem || !valor_origem || !moeda_destino){
+                msg("Informe os campos necessários no formulário.");
+                return;
+            }
+
+            doPostAjaxCall(
+                '{{route('conversao_monetaria.convert')}}',
+                {
+                    ref_date,
+                    moeda_origem,
+                    valor_origem,
+                    moeda_destino,
+                    cache
+                },
+                function(resposta){
+                    if (!resposta.success)
+                        msg(resposta.message,false);
+
+                    const data = resposta.data;
+                    changeFormState(data.cache.cached,data.cache.not_cached,data.valor_conversao);
+
+                },
+                function(resposta){
+                    msg(resposta.responseText,false,'log')
+                }
+            )
+
+        }
+
+        function changeFormState(cached, not_cached,converted_value){
+
+            cached = cached || 0;
+            not_cached = not_cached || 0;
+            converted_value = converted_value || 0;
+
+            $('#count-cached').html(cached);
+            $('#count-not-cached').html(not_cached);
+            $('#valor_destino').val(realFormat(converted_value,6,true));
+            w2ui['gridHistorico'].reload();
+
+
+        }
 
 
 
