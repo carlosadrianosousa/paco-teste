@@ -49,14 +49,15 @@ class ConversaoController extends Controller
     public function checkAPI(Request $request){
 
         $this->validate($request,[
-            'exchange_api_key' => 'string'
+            'exchange_api_key' => 'present'
         ]);
 
 
         if (!$request->exchange_api_key && !Auth::user()->exchange_api_key)
             return response()->json(['success' => false,'message' => 'Nenhuma chave de API foi informada e não existe uma chave de API salva na base de dados para este usuário. COD.: 3XMK'],400);
 
-        $api_key = (!$request->exchange_api_key)?Crypt::decrypt(Auth::user()->exchange_api_key):$request->exchange_api_key;
+
+        $api_key = empty((string)trim($request->exchange_api_key))?Crypt::decrypt(Auth::user()->exchange_api_key):$request->exchange_api_key;
 
 
         $response = Http::withOptions([
@@ -125,7 +126,7 @@ class ConversaoController extends Controller
 
                 //Se a data de referência for igual a data do servidor, endpoint LATEST
                 //Caso contrátio, endpoins HISTORY
-                if ($ref_date->equalTo($now_carbon)){ 
+                if ($ref_date->equalTo($now_carbon)){
                     $api_endpoint = "http://api.exchangeratesapi.io/v1/latest?access_key=$api_key&symbols=$allowed_currencies_str";
                 }else{
                     $api_endpoint = "http://api.exchangeratesapi.io/v1/$ref_date_str?access_key=$api_key&symbols=$allowed_currencies_str";
