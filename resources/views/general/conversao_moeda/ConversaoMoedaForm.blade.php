@@ -225,8 +225,55 @@
 
             searches: [
                 { field: 'id', caption: 'ID', type: 'int' },
-                { field: 'nome', caption: 'Nome', type: 'text' },
-                { field: 'descricao', caption: 'Descrição', type: 'text' },
+                { field: 'ref_date', caption: 'Data Referência', type: 'date' },
+                {
+                    field: 'moeda_origem_id', caption: 'Moeda Origem', type: 'list',
+                    options: {
+                        items:
+                            [
+                                {id: 'T', text: 'Todas'},
+                                {id: 'BRL|text', text: 'BRL'},
+                                {id: 'CAD|text', text: 'CAD'},
+                                {id: 'USD|text', text: 'USD'},
+                            ],
+                        showNone: false,
+
+                    },
+                },
+
+                {field: 'valor_origem', caption: 'Valor Origem',type:'float', render:'float'},
+
+                {
+                    field: 'moeda_destino_id', caption: 'Moeda Destino', type: 'list',
+                    options: {
+                        items:
+                            [
+                                {id: 'T', text: 'Todas'},
+                                {id: 'BRL|text', text: 'BRL'},
+                                {id: 'CAD|text', text: 'CAD'},
+                                {id: 'USD|text', text: 'USD'},
+                            ],
+                        showNone: false,
+
+                    },
+                },
+                {field: 'valor_destino', caption: 'Valor Destino',type:'float', render:'float'},
+                {field: 'created_at_date', caption: 'Data da Ação',type:'date', render:'date'},
+
+                {
+                    field: 'cached', caption: 'Cache?', type: 'list',
+                    options: {
+                        items:
+                            [
+                                {id: 'T', text: 'Todos'},
+                                {id: '1|boolean', text: 'SIM'},
+                                {id: '0|boolean', text: 'NÃO'},
+                            ],
+                        showNone: false,
+
+                    },
+                },
+
             ],
 
             url: '{{route('conversao_monetaria.listar')}}',

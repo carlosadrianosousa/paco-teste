@@ -395,7 +395,6 @@ function doAjaxCall(aMethod, aUrl, aData, aProcSucc, aProcFail, type, ajaxParams
             aProcSucc(reponse);
         },
         error: function (response) {
-            aProcFail(response);
 
             //if (aMethod.toUpperCase() == 'POST'){
             if (['POST','PUT','PATCH','DELETE'].includes(aMethod.toUpperCase())){
@@ -406,8 +405,9 @@ function doAjaxCall(aMethod, aUrl, aData, aProcSucc, aProcFail, type, ajaxParams
                     const is_json = isJSONString(response.responseText);
 
                     if (!is_json){
-                        msg(response.responseText,false,'log');
                         return;
+                        //msg(response.responseText,false,'log');
+                        //return;
                     }
 
 
@@ -433,6 +433,8 @@ function doAjaxCall(aMethod, aUrl, aData, aProcSucc, aProcFail, type, ajaxParams
                 }
 
             }
+
+            aProcFail(response);
 
         }
     });

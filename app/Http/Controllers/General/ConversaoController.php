@@ -49,20 +49,27 @@ class ConversaoController extends Controller
     public function checkAPI(Request $request){
 
         $this->validate($request,[
-            'exchange_api_key' => 'present'
+            'exchange_api_key' => 'present',
+            'usuario_id' => 'present'
         ]);
 
+        $usuario_id = !empty($request->usuario_id)?$request->usuario_id:0;
+        $user = User::find($usuario_id);
 
-        if (!$request->exchange_api_key && !Auth::user()->exchange_api_key)
+        if (!$usuario_id && !$request->exchange_api_key)
+            return response()->json(['success' => false,'message' => 'Informe a chave de API para realizar a checagem.'],400);
+
+        if (!$request->exchange_api_key && empty($user->exchange_api_key))
             return response()->json(['success' => false,'message' => 'Nenhuma chave de API foi informada e não existe uma chave de API salva na base de dados para este usuário. COD.: 3XMK'],400);
 
 
-        $api_key = empty((string)trim($request->exchange_api_key))?Crypt::decrypt(Auth::user()->exchange_api_key):$request->exchange_api_key;
+        $api_key = empty($request->exchange_api_key)?Crypt::decrypt($user->exchange_api_key):$request->exchange_api_key;
 
 
         $response = Http::withOptions([
             'timeout' => 20,
         ])->get($this->check_api_url."?access_key=$api_key");
+
 
         return $response;
 
@@ -83,9 +90,15 @@ class ConversaoController extends Controller
         if ($request->moeda_origem == $request->moeda_destino)
             return response()->json(['success' => false,'message' => 'Moeda de Origem e Destino são indênticas. COD.: MU12'],400);
 
-        //PARTE-SE DO PRINCÍPIO QUE EXISTE CHAVE DE API - REVER ISSO!
+        $use_cache = !empty($request->cache)?$request->cache:0;
+        $has_api_key = Auth::user()->exchange_api_key?1:0;
 
-        $api_key = Crypt::decrypt(Auth::user()->exchange_api_key);
+
+        if (!$use_cache && !$has_api_key)
+            return response()->json(['success' => false,'message' => 'Você não possui uma chave de API. Apenas requisições via "CACHE" podem ser realizadas.'],400);
+
+        //PARTE-SE DO PRINCÍPIO QUE EXISTE CHAVE DE API - REVER ISSO!
+        $api_key = $has_api_key?Crypt::decrypt(Auth::user()->exchange_api_key):"";
 
 
         //Recupera-se a data do servidor
@@ -102,7 +115,7 @@ class ConversaoController extends Controller
         //data de Referência, formato Y-m-d
         $ref_date_str = $ref_date->format('Y-m-d');
 
-        $use_cache = !empty($request->cache)?$request->cache:0;
+
 
         $cache_obj = CacheConversao::where("ref_date",'=',$ref_date->format('Y-m-d'))
                         ->where('api_timestamp','<=',$now_unix_timestamp)
@@ -142,20 +155,24 @@ class ConversaoController extends Controller
 
                 $rates = $body_resp['rates'];
 
+                $now_unix_timestamp = $body_resp['timestamp']; //o Timestamp da Requisição assume o valor de NOW
+
                 $cache_obj->ref_date = $ref_date_str;
                 $cache_obj->usuario_id = Auth::user()->id;
                 $cache_obj->valor_usd = 1; //Na base de dados, a moeda base é sempre Dólar Estadunidense
                 $cache_obj->valor_brl = $rates['USD'] / $rates['BRL'];
                 $cache_obj->valor_cad = $rates['USD'] / $rates['CAD'];
-                $cache_obj->api_timestamp = $body_resp['timestamp'];
+                $cache_obj->api_timestamp = $now_unix_timestamp;
                 $cache_obj->save();
 
                 //Recupera-se o objeto novamente simplesmente para se recuperar com exatas 6 casas decimais
                 $cache_obj = CacheConversao::find($cache_obj->id);
 
-
-
             }
+
+            //Se a busca for sem chave de API e nada foi localizado no cache, ERRO
+            if (!$has_api_key && !$cache_obj)
+                return response()->json(['success' => false,'message' => 'Conversão não pôde ser realizada. Você não possui uma chave de API válida e nenhuma informação pôde ser localizada no cache.'],400);
 
 
             //Persiste-se o histórico de fato
@@ -170,11 +187,6 @@ class ConversaoController extends Controller
             //Na aplicação, a base é sempre dólar!
             $historico->valor_destino = $request->valor_origem * ($cache_obj['valor_'.mb_strtolower($request->moeda_origem)] / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
 
-            /*if ($request->moeda_origem != 'USD'){
-                $historico->valor_destino = $request->valor_origem * ($cache_obj['valor_'.mb_strtolower($request->moeda_origem)] / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
-            }else{
-                $historico->valor_destino = $request->valor_origem * ( 1.000000 / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
-            }*/
 
             $historico->cached = $cached_info;
             $historico->api_timestamp = $now_unix_timestamp;
@@ -211,7 +223,9 @@ class ConversaoController extends Controller
                 HIST.moeda_origem_id, HIST.valor_origem, HIST.moeda_destino_id, HIST.valor_destino,
                 HIST.cached,
                 IF (HIST.cached IS TRUE,'SIM','NÃO') as cached_escrito,
-                HIST.created_at, DATE_FORMAT(HIST.created_at,'%d/%m/%Y %H:%i:%s') as created_at_masked")
+                HIST.created_at,
+                DATE_FORMAT(HIST.created_at,'%Y-%m-%d') as created_at_date,
+                DATE_FORMAT(HIST.created_at,'%d/%m/%Y %H:%i:%s') as created_at_masked")
             ->join('users AS USU','HIST.usuario_id','=','USU.id')
             ->where('HIST.usuario_id','=',Auth::user()->id)
             ->orderBy('created_at','DESC');

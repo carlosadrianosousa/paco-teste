@@ -121,10 +121,13 @@
 
         function testAPI(){
             const exchange_api_key = $('#exchange_api_key').val();
+            const usuario_id = parseInt('{{$action == 'edit'?\Illuminate\Support\Facades\Auth::user()->id:0}}');
+
 
             doPostAjaxCall(
                 '{{route('conversao_monetaria.checkAPI')}}',
                 {
+                    usuario_id,
                     exchange_api_key
                 },
                 function(resposta){

@@ -69,7 +69,8 @@ return [
     */
 
     //'timezone' => 'UTC',
-    'timezone' => 'America/Sao_Paulo',
+    'timezone' => env('APP_TIMEZONE', 'America/Sao_Paulo'),
+
 
     /*
     |--------------------------------------------------------------------------

@@ -39,10 +39,10 @@ class SearchUtils
             $search = json_decode($search,false);
 
             //Tratamento da limitação
-            if (isset($search->limit))
+            if (!empty($search->limit))
                 $db->limit((int)$search->limit);
 
-            if (isset($search->offset))
+            if (!empty($search->offset))
                 $db->offset((int)$search->offset);
 
             if (!isset($search->search))
