@@ -81,6 +81,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+
         if (!Auth::user()->can('store-user'))
             return response()->json(['success' => false, 'message' => "Você não possui permissão adicionar um usuário. COD.: UW09"],401);
 
@@ -139,7 +140,7 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
 
-        if (!Auth::user()->can('update-user'))
+        if (!Auth::user()->can('update-user',User::find($id)))
             return response()->json(['success' => false, 'message' => "Você só pode atualizar o seu próprio usuário. COD.: H8ZN"],401);
 
         $this->validaForm($request);
@@ -197,7 +198,7 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
 
-        if (!Auth::user()->can('destroy-user'))
+        if (!Auth::user()->can('destroy-user', User::find($id)))
             return response()->json(['success' => false, 'message' => "Você não possui permissão para esta operação. COD.: KRLH"],401);
 
         DB::beginTransaction();

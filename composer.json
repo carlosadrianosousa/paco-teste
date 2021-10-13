@@ -18,7 +18,6 @@
         "laravelcollective/html": "^6.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "~2.0",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "lucascudo/laravel-pt-br-localization": "^1.1",

@@ -14,7 +14,7 @@ class Initial extends Migration
     public function up()
     {
 
-        App\User::query()->delete();
+
 
         Schema::create('perfil_usuario', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -24,10 +24,6 @@ class Initial extends Migration
             $table->timestamps();
         });
 
-        \Illuminate\Support\Facades\DB::statement("
-          INSERT INTO perfil_usuario (id, nome, descricao, super)
-          VALUES(1,'Administrador','Superusuário do Sistema, não editável e não removível.',1)
-          ");
 
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('perfil_id')->after('password');
@@ -36,14 +32,6 @@ class Initial extends Migration
             $table->foreign('perfil_id', 'fk_usuario_perfil')->references('id')->on('perfil_usuario');
         });
 
-        $user = new App\User();
-        $user->id = 1;
-        $user->name = 'Administrador - Grupo PACO';
-        $user->password = \Illuminate\Support\Facades\Hash::make('abc*1234');
-        $user->email = 'paco@teste.com.br';
-        $user->ativo = 1;
-        $user->perfil_id = 1;
-        $user->save();
 
     }
 
@@ -67,10 +55,6 @@ class Initial extends Migration
 
         Schema::dropIfExists('perfil_usuario');
 
-        $user = App\User::find(1);
-        if ($user) {
-            $user->delete();
-        }
 
     }
 }

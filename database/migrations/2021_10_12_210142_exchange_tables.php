@@ -53,12 +53,6 @@ class ExchangeTables extends Migration
         });
 
 
-        \Illuminate\Support\Facades\DB::unprepared("
-            INSERT INTO moeda(id,descricao) VALUES
-            ('USD','Dólar Estadunidense'),
-            ('BRL','Real Brasileiro'),
-            ('CAD','Dólar Canadense');
-        ");
 
     }
 

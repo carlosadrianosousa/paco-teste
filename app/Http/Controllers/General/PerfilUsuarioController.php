@@ -39,10 +39,6 @@ class PerfilUsuarioController extends Controller
 
         $perfil = PerfilUsuario::find($id);
 
-        if ($perfil->super){
-            return response()->json(['success' => false,'message' => 'O perfil de SuperUsuário NÃO pode ser editado'],400);
-        }
-
 
         return view('general.perfil_usuario.PerfilUsuarioForm', [
             'action' => 'edit',
