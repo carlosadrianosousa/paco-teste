@@ -8,6 +8,7 @@ use App\Models\Utils\SearchUtils;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -99,6 +100,10 @@ class UsuarioController extends Controller
             $obj->ativo = 1;
             $obj->perfil_id = $request->perfil_id;
             $obj->ativo = $request->ativo;
+
+            if ($request->exchange_api_key)
+                $obj->exchange_api_key = Crypt::encrypt($request->exchange_api_key);
+
             $obj->save();
 
 
@@ -150,6 +155,10 @@ class UsuarioController extends Controller
             $obj->email = $request->email;
             $obj->perfil_id = $request->perfil_id;
             $obj->ativo = $request->ativo;
+
+            if ($request->exchange_api_key)
+                $obj->exchange_api_key = Crypt::encrypt($request->exchange_api_key);
+
             $obj->save();
 
 

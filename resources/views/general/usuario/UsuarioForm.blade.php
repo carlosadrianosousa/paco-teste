@@ -57,27 +57,39 @@
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                 </select>
-
             </div>
+        </div>
 
-
-
-
-
+        <div class="row flex-auto">
+            <div class="col-md-12">
+                <div class="card bg-secondary group-fields mt-3 sc">
+                    <div class="card-header ">
+                        <div class="text-white text-uppercase">DADOS API EXCHANGE RATES</div>
+                    </div>
+                    <div class="card-body bg-white">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                {{Form::label('Token de Acesso',null,['class'=>'control-label'])}}
+                                {{Form::text('exchange_api_key', '',['class'=>'disableVisualize form-control','id' => 'exchange_api_key','placeholder' => '************'])}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
 
         @if ($action == 'add' || $action == 'edit')
 
-            <button id="btn-add-edit"  class="btn btn-primary float-right" style="margin-top: 40px;">
+            <button id="btn-add-edit"  class="btn btn-primary float-right mt-4 mb-4">
                 <i class="fa fa-btn fa-envelope"></i>
                 Salvar
             </button>
 
 
         @elseif ($action == 'view')
-            <a href='{{route('usuario.GridView')}}' class="btn btn-secondary float-right viaAjaxPost" style="margin-top: 40px;">
+            <a href='{{route('usuario.GridView')}}' class="btn btn-secondary float-right viaAjaxPost" >
                 <i class="fa fa-btn fa-backward"></i>
                 Voltar
             </a>
@@ -102,15 +114,14 @@
         //FIM DO TYPEAHEAD FORNECEDOR
         function AjaxAddEdit(){
 
-            nome = $('#nome').val();
-            perfil_id = $('#perfil').val();
-            email = $('#email').val();
-            senha = $('#password').val();
-            senha_confirm = $('#password_confirm').val();
-            ativo = $('#ativo').val();
-            cpf = $('#cpf').val();
-            nomem = $('#nomem').val();
-            datan = $('#datan').val();
+            const nome = $('#nome').val();
+            const perfil_id = $('#perfil').val();
+            const email = $('#email').val();
+            const senha = $('#password').val();
+            const senha_confirm = $('#password_confirm').val();
+            const ativo = $('#ativo').val();
+            const exchange_api_key = $('#exchange_api_key').val();
+
 
             if (!nome || !perfil_id || !email){
                 msg('Preencha o formulário corretamente e tente realizar a operação novamente<br>Os campos marcados com asterisco são Obrigatórios',false,'warning');
@@ -142,6 +153,7 @@
                     email:email,
                     senha:senha,
                     senha_confirm:senha_confirm,
+                    exchange_api_key: exchange_api_key,
                     ativo: ativo,
 
 
@@ -154,23 +166,18 @@
 
                 },
                 function(resposta){
-                    //msg(resposta.responseText,false,'log');
+                    msg(resposta.responseText,false,'log');
                 }
-
             )
-
-
-
 
         }
 
 
 
-        @if ($action == 'edit' || $action == 'view')
-
         //Reload Exceptions
-        $('#perfil').val('{{$usuario->perfil_id}}');
-        $('#ativo').val('{{$usuario->ativo}}');
+        @if ($action == 'edit' || $action == 'view')
+            $('#perfil').val('{{$usuario->perfil_id}}');
+            $('#ativo').val('{{$usuario->ativo}}');
         @endif
 
         @if ($action == 'view')

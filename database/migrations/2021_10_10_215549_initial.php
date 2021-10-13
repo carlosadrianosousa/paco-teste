@@ -13,8 +13,11 @@ class Initial extends Migration
      */
     public function up()
     {
+
+        App\User::query()->delete();
+
         Schema::create('perfil_usuario', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nome', 250);
             $table->string('descricao', 1000);
             $table->boolean('super')->default(false);
@@ -27,7 +30,8 @@ class Initial extends Migration
           ");
 
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('perfil_id')->after('password');
+            $table->unsignedBigInteger('perfil_id')->after('password');
+            $table->string('exchange_api_key',1000)->nullable()->after('remember_token');
             $table->boolean('ativo')->after('perfil_id');
             $table->foreign('perfil_id', 'fk_usuario_perfil')->references('id')->on('perfil_usuario');
         });
@@ -58,9 +62,9 @@ class Initial extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('perfil_id');
             $table->dropColumn('ativo');
+            $table->dropColumn('exchange_api_key');
         });
 
-        Schema::dropIfExists('usuario_perfil');
         Schema::dropIfExists('perfil_usuario');
 
         $user = App\User::find(1);

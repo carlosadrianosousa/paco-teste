@@ -75,4 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
     route::put('Usuario/{id}', ['as' => 'usuario.update', 'uses' => 'General\UsuarioController@update']);
     route::delete('Usuario/{id}', ['as' => 'usuario.destroy', 'uses' => 'General\UsuarioController@destroy']);
 
+    //ROTAS RELATIVAS À CONVERSÃO MONETÁRIA
+    route::post('ConversaoMonetaria/FormView', ['as' => 'conversao_monetaria.FormView', 'uses' => 'General\ConversaoController@FormView']);
+
 });

@@ -61,7 +61,7 @@
         </li>
 
         <li>
-            <a data-toggle="collapse" class="viaAjaxPost" href="#" aria-expanded="false">
+            <a data-toggle="collapse" class="viaAjaxPost" href="{{route('conversao_monetaria.FormView')}}" aria-expanded="false">
                 <i class="fa fa-refresh fa-fw mr-2"></i>Conversão Monetária
             </a>
         </li>
@@ -92,10 +92,17 @@
 <link rel="stylesheet" href="components/sidr/stylesheets/jquery.sidr.light.css">
 <link rel="stylesheet" href="components/font-awesome/css/all.css">
 <link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/converter.css">
+<link rel="stylesheet" href="components/bootstrap-switch/css/bootstrap-switch.min.css">
+<link rel="stylesheet" href="components/bootstrap-datepicker/css/bootstrap-datepicker3.css">
 
 
 <script src="components/sidr/jquery.sidr.min.js"></script>
 <script src="components/bootstrap/js/bootstrap.min.js"></script>
+<script src="components/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+<script src="components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
 
 <script>
