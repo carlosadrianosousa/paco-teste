@@ -175,9 +175,10 @@ class ConversaoController extends Controller
             //Atenção
             //Na aplicação, a base é sempre dólar!
             if ($request->moeda_origem != 'USD'){
-                $historico->valor_destino = $request->valor_origem * ($cache_obj['valor_'.mb_strtolower($request->moeda_origem)]);
+                $historico->valor_destino = $request->valor_origem * ($cache_obj['valor_'.mb_strtolower($request->moeda_origem)] / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
             }else{
-                $historico->valor_destino = $request->valor_origem * (1.000000 / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
+                //dd($request->valor_origem, $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
+                $historico->valor_destino = $request->valor_origem * ( 1.000000 / $cache_obj['valor_'.mb_strtolower($request->moeda_destino)]);
             }
 
             $historico->cached = $cached_info;
