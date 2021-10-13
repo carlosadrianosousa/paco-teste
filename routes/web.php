@@ -49,8 +49,6 @@ Route::get('logout', [
 
 //DEMAIS ROTAS DA APLICAÇÃO
 //COMO A APLICAÇÃO É PEQUENA, TODAS AS ROTAS FORAM COLOCADAS NESTE ARQUIVO
-/**Perfil de Usuário**/
-
 
 Route::group(['middleware' => ['auth']], function () {
 

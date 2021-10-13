@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-
-
 class HistoricoConversao extends Model
 {
     protected $table = 'historico_conversao';

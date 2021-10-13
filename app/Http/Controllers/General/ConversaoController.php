@@ -6,16 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\General\CacheConversao;
 use App\Models\General\HistoricoConversao;
 use App\Models\General\Moeda;
-use App\Models\General\PerfilUsuario;
 use App\Models\Utils\SearchUtils;
 use App\User;
 use Carbon\Carbon;
-use Composer\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class ConversaoController extends Controller
@@ -46,6 +43,14 @@ class ConversaoController extends Controller
         ]);
     }
 
+    /**
+     * Método de validação de chave de API
+     * Este método checa se a chave da API é válida ou não.
+     * Este acesso ao EndPoint da API não consome franquia do plano da API!
+     * @param Request $request
+     * @return \Illuminate\Http\Client\Response|\Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function checkAPI(Request $request){
 
         $this->validate($request,[
@@ -76,6 +81,12 @@ class ConversaoController extends Controller
     }
 
 
+    /**
+     * Método principal de conversão
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function convert(Request $request)
     {
 

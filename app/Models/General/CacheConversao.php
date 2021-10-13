@@ -3,9 +3,6 @@
 namespace App\Models\General;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-
-
 
 
 class CacheConversao extends Model

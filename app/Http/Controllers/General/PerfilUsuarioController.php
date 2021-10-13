@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\General\PerfilUsuario;
 use App\Models\Utils\SearchUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PerfilUsuarioController extends Controller
@@ -22,6 +23,8 @@ class PerfilUsuarioController extends Controller
 
     public function AddView()
     {
+        if (!Auth::user()->can('manage-profiles'))
+            return response()->json(['success' => false, 'message' => 'Você não possui permissão para gerenciar perfis.'],401);
 
         return view('general.perfil_usuario.PerfilUsuarioForm', [
             'action' => 'add'
@@ -30,6 +33,9 @@ class PerfilUsuarioController extends Controller
 
     public function EditView($id)
     {
+
+        if (!Auth::user()->can('manage-profiles'))
+            return response()->json(['success' => false, 'message' => 'Você não possui permissão para gerenciar perfis.'],401);
 
         $perfil = PerfilUsuario::find($id);
 
@@ -66,6 +72,10 @@ class PerfilUsuarioController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!Auth::user()->can('manage-profiles'))
+            return response()->json(['success' => false, 'message' => 'Você não possui permissão para gerenciar perfis.'],401);
+
         $this->validaForm($request);
 
         //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
@@ -100,6 +110,9 @@ class PerfilUsuarioController extends Controller
     public function update(Request $request, $id)
     {
 
+        if (!Auth::user()->can('manage-profiles'))
+            return response()->json(['success' => false, 'message' => 'Você não possui permissão para gerenciar perfis.'],401);
+
         $this->validaForm($request);
 
         //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
@@ -131,6 +144,10 @@ class PerfilUsuarioController extends Controller
      */
     public function destroy($id)
     {
+
+        if (!Auth::user()->can('manage-profiles'))
+            return response()->json(['success' => false, 'message' => 'Você não possui permissão para gerenciar perfis.'],401);
+
         DB::beginTransaction();
         $obj = PerfilUsuario::find($id);
 
@@ -157,14 +174,11 @@ class PerfilUsuarioController extends Controller
 
         $query = SearchUtils::createQuery($request, $query, 'having');
 
-
-
         return $query->get();
     }
 
     private  function validaForm(Request $request)
     {
-
 
         //INÍCIO DAS VALIDAÇÕES
         $this->validate($request, [

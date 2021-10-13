@@ -26,6 +26,9 @@ class UsuarioController extends Controller
 
     public function AddView()
     {
+        if (!Auth::user()->can('store-user'))
+            return response()->json(['success' => false, 'message' => "Você não possui permissão para adição de usuários. COD.: EDJV"],401);
+
         $perfis = PerfilUsuario::all();
         return view('general.usuario.UsuarioForm', [
             'action' => 'add',
@@ -36,7 +39,11 @@ class UsuarioController extends Controller
     public function EditView($id)
     {
 
+
         $usuario = User::find($id);
+
+        if (!Auth::user()->can('update-user',$usuario))
+            return response()->json(['success' => false, 'message' => "Você só pode editar o seu próprio usuário. COD.: 1X3A"],401);
 
 
         if ($usuario->id == 1 && \Auth::user()->id != 1){
@@ -74,6 +81,9 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->can('store-user'))
+            return response()->json(['success' => false, 'message' => "Você não possui permissão adicionar um usuário. COD.: UW09"],401);
+
         $this->validaForm($request);
 
         if (!$request->senha){
@@ -129,6 +139,9 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
 
+        if (!Auth::user()->can('update-user'))
+            return response()->json(['success' => false, 'message' => "Você só pode atualizar o seu próprio usuário. COD.: H8ZN"],401);
+
         $this->validaForm($request);
 
         if ($request->senha && $request->senha != $request->senha_confirm){
@@ -183,6 +196,10 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
+
+        if (!Auth::user()->can('destroy-user'))
+            return response()->json(['success' => false, 'message' => "Você não possui permissão para esta operação. COD.: KRLH"],401);
+
         DB::beginTransaction();
 
         $obj = User::find($id);

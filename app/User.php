@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\General\PerfilUsuario;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,4 +37,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function perfil(){
+        return $this->belongsTo(PerfilUsuario::class, 'perfil_id','id');
+    }
+
+    public function isAdmin(){
+        if ($this->perfil->super){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
 }

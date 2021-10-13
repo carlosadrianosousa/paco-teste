@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 
-
-
 class Moeda extends Model
 {
     protected $table = 'moeda';
@@ -15,9 +13,7 @@ class Moeda extends Model
 
     public function historicos()
     {
-
         return $this->hasMany(User::class, 'perfil_id', 'id');
-
     }
 
 
