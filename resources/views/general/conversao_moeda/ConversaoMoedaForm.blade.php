@@ -195,6 +195,7 @@
             multiSelect : false,
             recid:'id',
             method: 'GET',
+            limit:10,
             show: {
                 footer: true,
                 toolbar: true,
@@ -204,13 +205,21 @@
                 header: true,
                 toolbarColumns: false,
                 searchAll: false,
-                toolbarInput: false
+                toolbarInput: false,
+                lineNumbers: true
+
             },
+
             columns: [
                 { caption: '', size: '20px', attr: 'align=center',info: true},
-                { field: 'recid', caption: 'Cód.', size: '100px', sortable: true, attr: 'align=center', type: 'int' },
-                { field: 'nome', caption: 'Nome', size: '200px', sortable: true, attr: 'align=center', type: 'text' },
-                { field: 'descricao', caption: 'Descrição', size: '800px', sortable: true, resizable: true, type: 'text' },
+                { field: 'recid', caption: 'Cód.', size: '100px', hidden: true, sortable: true, attr: 'align=center', type: 'int' },
+                { field: 'ref_date_masked', caption: 'Referência', size: '100px', sortable: true, attr: 'align=center', type: 'text' },
+                { field: 'moeda_origem_id', caption: 'Moeda Origem', size: '100px', sortable: true, attr: 'align=center', type: 'text' },
+                { field: 'valor_origem', caption: 'Valor Origem', size: '120px', sortable: true, type: 'float', render: 'number:2', type:'float'},
+                { field: 'moeda_destino_id', caption: 'Moeda Destino', size: '100px', sortable: true, attr: 'align=center', type: 'text' },
+                { field: 'valor_destino', caption: 'Valor Destino', size: '150px', sortable: true, type: 'float', render: 'number:6', type:'float'},
+                { field: 'created_at_masked', caption: 'Data/Hora Ação', size: '140px', sortable: true,attr: 'align=center', resizable: true, type: 'text' },
+                { field: 'cached_escrito', caption: 'Cache', size: '80px', sortable: true,attr: 'align=center', resizable: true, type: 'text' },
 
             ],
 

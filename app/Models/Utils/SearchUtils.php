@@ -38,6 +38,13 @@ class SearchUtils
             $search = $request->input('request');
             $search = json_decode($search,false);
 
+            //Tratamento da limitação
+            if (isset($search->limit))
+                $db->limit((int)$search->limit);
+
+            if (isset($search->offset))
+                $db->offset((int)$search->offset);
+
             if (!isset($search->search))
                 return $db;
 
@@ -156,6 +163,8 @@ class SearchUtils
 
 
             }
+
+
 
             return $db;
 

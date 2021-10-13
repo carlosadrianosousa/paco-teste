@@ -111,12 +111,6 @@ class ConversaoController extends Controller
         $cached_info = ($cache_obj && $use_cache)?1:0; //Verifica se as informações vieram do Cache
 
         //Se não tiver que utilizar cache, SEMPRE realize a busca via API
-
-
-
-
-
-
         //IMPORTANTE! - INICIALIZA-SE A TRANSAÇÃO
         DB::beginTransaction();
         try {
@@ -217,7 +211,7 @@ class ConversaoController extends Controller
                 HIST.moeda_origem_id, HIST.valor_origem, HIST.moeda_destino_id, HIST.valor_destino,
                 HIST.cached,
                 IF (HIST.cached IS TRUE,'SIM','NÃO') as cached_escrito,
-                HIST.created_at, DATE_FORMAT(HIST.created_at,'%d/%m/%Y H:i:s') as created_at_masked")
+                HIST.created_at, DATE_FORMAT(HIST.created_at,'%d/%m/%Y %H:%i:%s') as created_at_masked")
             ->join('users AS USU','HIST.usuario_id','=','USU.id')
             ->where('HIST.usuario_id','=',Auth::user()->id)
             ->orderBy('created_at','DESC');
