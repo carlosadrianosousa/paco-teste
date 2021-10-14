@@ -48,3 +48,10 @@ Conforme o solicitado, foi realizado:
 * Front-end confeccionado em Boostrap 4, HTML5 e CSS
 * Sistema parcialmente responsivo, funcional nos browsers: Google Chrome, Ópera e Firefox.
 
+**USUÁRIOS PADRÕES**
+
+Após a execução do seed (php artisan db:seed), dois usuários são criados, um com superprivilégios e outro sem:
+
+* Super -  user: paco@teste.com - pass: 123456
+* Normal - user: carlos@teste.com - pass: 123456
+
