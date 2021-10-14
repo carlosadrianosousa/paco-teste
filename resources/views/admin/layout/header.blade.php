@@ -20,10 +20,7 @@
 
 
     <li class="nav-item ml-auto">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{route('logout')}}">Sair</a>
-        </div>
+        <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
     </li>
 
 
