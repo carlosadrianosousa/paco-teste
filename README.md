@@ -21,7 +21,7 @@ Respositório para teste prático.
 
 Conforme o solicitado, a aplicação deve:
 
-* Possuir front-end confeccionado, preferencialmente, em Laravel
+* Possuir back-end confeccionado, preferencialmente, em Laravel
 * Base de dados MySQL
 * Possuir front-end em Bootstrap, HTML5 e CSS
 * Sistema de Login
